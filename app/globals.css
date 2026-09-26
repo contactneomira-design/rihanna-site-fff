@@ -1,0 +1,97 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html {
+  scroll-behavior: auto; /* Lenis takes over */
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  overflow-x: hidden;
+  max-width: 100%;
+}
+
+/* ------------------------------------------------------------------ */
+/* Arabic (set on <html> by LangProvider / the boot script in layout)   */
+/* ------------------------------------------------------------------ */
+.font-arabic {
+  font-family: var(--font-arabic), 'Cairo', sans-serif;
+}
+/* Tailwind's font-display / font-body utilities would otherwise win. */
+.font-arabic body,
+.font-arabic .font-display,
+.font-arabic .font-body {
+  font-family: var(--font-arabic), 'Cairo', sans-serif;
+}
+/* Bebas Neue is tightly set — Arabic needs air for its ascenders/dots. */
+.font-arabic .font-display {
+  font-weight: 700;
+  line-height: 1.25 !important;
+  text-transform: none;
+}
+/* Letter-spacing breaks Arabic letter joining, so switch it off in RTL. */
+html[dir='rtl'] * {
+  letter-spacing: normal !important;
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #0a0a0a;
+}
+::-webkit-scrollbar-thumb {
+  background: #3a332a;
+  border-radius: 8px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #c86a3b;
+}
+
+.text-outline {
+  -webkit-text-stroke: 1.5px #f5f1e8;
+  color: transparent;
+}
+
+.text-outline-terracotta {
+  -webkit-text-stroke: 1.5px #c86a3b;
+  color: transparent;
+}
+
+.grain-overlay {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 60;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
+  mix-blend-mode: overlay;
+}
+
+.glass {
+  background: rgba(10, 10, 10, 0.45);
+  backdrop-filter: blur(14px) saturate(140%);
+  -webkit-backdrop-filter: blur(14px) saturate(140%);
+  border: 1px solid rgba(245, 241, 232, 0.14);
+}
+
+.glass-light {
+  background: rgba(245, 241, 232, 0.08);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(245, 241, 232, 0.16);
+}
+
+.divider-line {
+  background: linear-gradient(90deg, transparent, rgba(245, 241, 232, 0.25), transparent);
+  height: 1px;
+}
+
+/* Hide scrollbar for drag galleries but keep functionality */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
