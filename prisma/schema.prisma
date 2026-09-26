@@ -1,0 +1,59 @@
+generator client {
+  provider      = "prisma-client-js"
+  // Netlify runs the site on AWS Lambda (Amazon Linux): the extra targets
+  // make sure the database engine is bundled for it.
+  binaryTargets = ["native", "rhel-openssl-3.0.x", "rhel-openssl-1.0.x"]
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL") // Supabase pooled connection (runtime)
+  directUrl = env("DIRECT_URL")   // Supabase direct/session connection (migrations)
+}
+
+model Car {
+  id           String   @id @default(cuid())
+  slug         String   @unique
+  name         String
+  brand        String   @default("")
+  category     String
+  pricePerDay  Int      @default(0)
+  image        String
+  images       String[]
+  seats        Int      @default(5)
+  transmission String   @default("Manual")
+  fuel         String   @default("Petrol")
+  blurb        String   @default("")
+  features     String[]
+  tags         String[]
+  available    Boolean  @default(true)
+  sortOrder    Int      @default(0)
+  createdAt    DateTime @default(now())
+}
+
+// Photos uploaded from the admin panel (served by /api/img/<id>).
+model CarImage {
+  id        String   @id @default(cuid())
+  mime      String
+  data      Bytes
+  createdAt DateTime @default(now())
+}
+
+model Booking {
+  id        String   @id @default(cuid())
+  carName   String
+  fullName  String
+  phone     String
+  startDate DateTime
+  endDate   DateTime
+  status    String   @default("pending")
+  createdAt DateTime @default(now())
+}
+
+model Contact {
+  id        String   @id @default(cuid())
+  name      String
+  phone     String
+  message   String
+  createdAt DateTime @default(now())
+}
